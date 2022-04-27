@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: graf
+  name: graf
+  namespace: monitor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: graf
+  template:
+    metadata:
+      labels:
+        app: graf
+    spec:
+      containers:
+      - image: grafana/grafana:8.4.4
+        imagePullPolicy: IfNotPresent
+        name: graf
+        ports:
+            - containerPort: 3000
+              name: http-graf
+              protocol: TCP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: graf  
+  name: graf
+  namespace: monitor
+spec:
+  ports:
+    - port: 3000
+      protocol: TCP
+      nodePort: 31800
+  selector:
+    app: graf
+  type: NodePort

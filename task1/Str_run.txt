@@ -1,0 +1,3 @@
+kubectl create -f monitor-namespace.yaml
+kubectl create -f nodexp_dep.yaml
+kubectl create -f nodexp_service.yaml

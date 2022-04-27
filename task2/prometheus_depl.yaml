@@ -1,0 +1,49 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometh
+  namespace: monitor
+  labels:
+    app: prometh
+spec:
+  selector:
+    matchLabels:
+      app: prometh
+  replicas: 1
+  template:
+    metadata:
+      name: prometh
+      labels:
+        app: prometh
+    spec:
+      containers:
+      - name: contprometh
+        image: prom/prometheus
+        ports:
+        - containerPort: 9090
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/prometheus
+      volumes:
+      - name: config-volume
+        configMap:
+         name: prometheus-config
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus
+  namespace: monitor
+  labels:
+    app: prometh
+spec:
+  selector:
+    app: prometh
+  type: NodePort
+  ports:
+  - name: prometh
+    protocol: TCP
+    port: 9090
+    nodePort: 32510

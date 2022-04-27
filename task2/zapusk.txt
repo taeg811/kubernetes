@@ -1,0 +1,20 @@
+kubectl get ns
+NAME                   STATUS   AGE
+default                Active   5d3h
+kube-node-lease        Active   5d3h
+kube-public            Active   5d3h
+kube-system            Active   5d3h
+kubernetes-dashboard   Active   5d1h
+monitor                Active   2d17h
+
+kubectl config set-context --current --namespace=monitor
+
+kubectl create -f prometheus-config.yaml
+kubectl create -f prometheus_depl.yaml (будет доступен извне 10.73.1.115:32510)
+kubectl create -f noda.yaml  (еще один экспортет доступный прометеусу внутри кластера по имени nodex:9100)
+(первый нодекспортер уже запущен с предыдущего задания доступен извне 10.73.1.115:32500)
+kubectl create -f grafana2.yaml (сервис доступен на 10.73.1.115:31800) 
+
+сервисы для deploy-ев описаны внутри yaml-файлов, там же обозначены порты и типы доступа.
+проверяем доступность таргетов в прометеус. и дабавляем prometheus источником данных в графане.
+создаем дашборд и добавляем графики потребления цпу и мем.

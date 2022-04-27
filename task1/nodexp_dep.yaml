@@ -1,0 +1,24 @@
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: nodexporter
+  namespace: monitor
+  labels:
+    app: nodexporter
+spec:
+  selector:
+    matchLabels:
+      app: nodexporter
+  replicas: 1 
+  template:
+    metadata:
+      name: nodexporter
+      labels:
+        app: nodexporter
+    spec:
+      containers:
+      - name: contnexp
+        image: quay.io/prometheus/node-exporter:latest
+        ports:
+        - containerPort: 9100
+          

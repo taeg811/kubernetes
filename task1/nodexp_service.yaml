@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodexport
+  namespace: monitor
+  labels:
+    app: nodexporter
+spec:
+  selector:
+    app: nodexporter
+  type: NodePort
+  ports:
+  - name: nodexporter 
+    protocol: TCP
+    port: 9100
+    nodePort: 32500

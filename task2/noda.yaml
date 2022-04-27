@@ -1,0 +1,41 @@
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: nodex
+  namespace: monitor
+  labels:
+    app: nodex
+spec:
+  selector:
+    matchLabels:
+      app: nodex
+  replicas: 1 
+  template:
+    metadata:
+      name: nodex
+      labels:
+        app: nodex
+    spec:
+      containers:
+      - name: contnod
+        image: quay.io/prometheus/node-exporter:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9100
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodex
+  labels:
+    app: nodex
+spec:
+  selector:
+    app: nodex
+  ports:
+    - protocol: TCP
+      port: 9100
+      targetPort: 9100          
+
+
