@@ -1,4 +1,5 @@
 podexporter.py отправляет запрос на 'https://10.73.1.115:8443/api/v1/pods'
+необходимы 2 файла client.crt client.key
 
 docker build -t pod .
 docker run -it --name=numpod -p 8088:8088 pod (для проверки)
